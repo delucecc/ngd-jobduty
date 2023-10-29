@@ -1,4 +1,4 @@
-Config.Webhook = 'https://discord.com/api/webhooks/1119678233198207086/0dGlQPqWMiEWJ6mn7EvMosYDoq5gjZrZZjjVfEDU6ywyH5ShbprV27vgobMzF8WPXCD0'
+Config.Webhook = 'CHANGEME'
 
 local QBCore = exports['qb-core']:GetCoreObject()
 local onDutyTimes = {}
@@ -40,6 +40,26 @@ function sendDutyTimeWebhook(src, playerName)
     " went off duty. Total time on duty: " .. hours .. "H " .. minutes .. "M " .. seconds .. "S")
 end
 
+RegisterNetEvent('QBCore:ToggleDuty')
+AddEventHandler('QBCore:ToggleDuty', function()
+    local src = source
+    local xPlayer = QBCore.Functions.GetPlayer(src)
+    local playerName = xPlayer.PlayerData.charinfo.firstname .. " " .. xPlayer.PlayerData.charinfo.lastname
+    local metadata = xPlayer.PlayerData.metadata
+    if metadata and metadata.callsign then
+        playerName = playerName .. " (Callsign: " .. metadata.callsign .. ")"
+    end
+    if xPlayer.PlayerData.job and xPlayer.PlayerData.job.name == Config.PoliceJob then
+        if onDutyTimes[src] then
+            sendDutyTimeWebhook(src, playerName)
+            onDutyTimes[src] = nil
+        else
+            onDutyTimes[src] = os.time()
+            sendToDiscord(playerName .. " went on duty.")
+        end
+    end
+end)
+
 function sendToDiscord(message)
     local webhook = Config.Webhook
     if webhook == '' or webhook == 'CHANGEME' then
@@ -49,7 +69,7 @@ function sendToDiscord(message)
     local connect = {
         {
             ["color"] = 255,
-            ["title"] = "Police Duty",
+            ["title"] = "Police Duty Log",
             ["description"] = message,
             ["footer"] = {
                 ["icon_url"] = "https://media.discordapp.net/attachments/1077462714902917171/1077462755625418862/96Logo.png",

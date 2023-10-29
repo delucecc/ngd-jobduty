@@ -11,7 +11,7 @@ RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()
 end)
 
 RegisterCommand(Config.Command, function()
-    if PlayerData.job and PlayerData.job.name == 'police' then
+    if PlayerData.job and PlayerData.job.name == Config.PoliceJob then
         TriggerServerEvent('QBCore:ToggleDuty')
         TriggerServerEvent('ngd-policeduty:Server:Log')
     end
