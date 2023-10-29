@@ -14,7 +14,6 @@ if Config.UseCommand then
     RegisterCommand(Config.Command, function()
         if PlayerData.job and PlayerData.job.name == Config.PoliceJob or PlayerData.job and PlayerData.job.type == Config.PoliceJobType then
             TriggerServerEvent('QBCore:ToggleDuty')
-            TriggerServerEvent('ngd-policeduty:Server:Log')
         end
     end)
 
