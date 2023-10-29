@@ -1,5 +1,6 @@
 # ngd-pdduty 
-Is a simple duty toggle and log for police.  Discord webhooks are sent everytime a police officer goes on duty, and then send their total on duty time and another webhook when they go off duty.
+
+ ngd-pdduty is a simple system that uses Discord webhooks to notify when a police officer goes on and off duty.  It also enables the use of a / command to go on and off duty.
 
 Created by Nemesis Gaming Development:
 https://discord.gg/AnXx2GVGcM
