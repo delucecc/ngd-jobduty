@@ -10,13 +10,15 @@ RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()
     PlayerData = {}
 end)
 
-RegisterCommand(Config.Command, function()
-    if PlayerData.job and PlayerData.job.name == Config.PoliceJob then
-        TriggerServerEvent('QBCore:ToggleDuty')
-        TriggerServerEvent('ngd-policeduty:Server:Log')
-    end
-end)
+if Config.UseCommand then
+    RegisterCommand(Config.Command, function()
+        if PlayerData.job and PlayerData.job.name == Config.PoliceJob or PlayerData.job and PlayerData.job.type == Config.PoliceJobType then
+            TriggerServerEvent('QBCore:ToggleDuty')
+            TriggerServerEvent('ngd-policeduty:Server:Log')
+        end
+    end)
 
-CreateThread(function()
-    TriggerEvent('chat:addSuggestion', Config.ChatSuggestion, Config.ChatSuggestionM, {})
-end)
+    CreateThread(function()
+        TriggerEvent('chat:addSuggestion', Config.ChatSuggestion, Config.ChatSuggestionM, {})
+    end)
+end

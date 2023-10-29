@@ -1,24 +1,15 @@
+-- ██     ██ ███████ ██████  ██   ██  ██████   ██████  ██   ██
+-- ██     ██ ██      ██   ██ ██   ██ ██    ██ ██    ██ ██  ██
+-- ██  █  ██ █████   ██████  ███████ ██    ██ ██    ██ █████
+-- ██ ███ ██ ██      ██   ██ ██   ██ ██    ██ ██    ██ ██  ██
+--  ███ ███  ███████ ██████  ██   ██  ██████   ██████  ██   ██
+
 Config.Webhook = 'CHANGEME'
+---------------------------------------------------------------------------------------------------------------------------------------------
+
 
 local QBCore = exports['qb-core']:GetCoreObject()
 local onDutyTimes = {}
-
-RegisterNetEvent('ngd-policeduty:Server:Log', function()
-    local src = source
-    local xPlayer = QBCore.Functions.GetPlayer(src)
-    local playerName = xPlayer.PlayerData.charinfo.firstname .. " " .. xPlayer.PlayerData.charinfo.lastname
-    local metadata = xPlayer.PlayerData.metadata
-    if metadata and metadata.callsign then
-        playerName = playerName .. " (Callsign: " .. metadata.callsign .. ")"
-    end
-    if onDutyTimes[src] then
-        sendDutyTimeWebhook(src, playerName)
-        onDutyTimes[src] = nil
-    else
-        onDutyTimes[src] = os.time()
-        sendToDiscord(playerName .. " went on duty.")
-    end
-end)
 
 AddEventHandler('playerDropped', function(reason)
     local src = source
@@ -37,7 +28,7 @@ function sendDutyTimeWebhook(src, playerName)
     local minutes = math.floor((timeOnDuty % 3600) / 60)
     local seconds = timeOnDuty % 60
     sendToDiscord(playerName ..
-    " went off duty. Total time on duty: " .. hours .. "H " .. minutes .. "M " .. seconds .. "S")
+        " went off duty. Total time on duty: " .. hours .. "H " .. minutes .. "M " .. seconds .. "S")
 end
 
 RegisterNetEvent('QBCore:ToggleDuty')
@@ -49,7 +40,7 @@ AddEventHandler('QBCore:ToggleDuty', function()
     if metadata and metadata.callsign then
         playerName = playerName .. " (Callsign: " .. metadata.callsign .. ")"
     end
-    if xPlayer.PlayerData.job and xPlayer.PlayerData.job.name == Config.PoliceJob then
+    if xPlayer.PlayerData.job and xPlayer.PlayerData.job.name == Config.PoliceJob or xPlayer.PlayerData.job and xPlayer.PlayerData.job.type == Config.PoliceJobType then
         if onDutyTimes[src] then
             sendDutyTimeWebhook(src, playerName)
             onDutyTimes[src] = nil
@@ -60,12 +51,14 @@ AddEventHandler('QBCore:ToggleDuty', function()
     end
 end)
 
+
 function sendToDiscord(message)
     local webhook = Config.Webhook
     if webhook == '' or webhook == 'CHANGEME' then
         print('Please put webhook into editableserver.lua')
         return
     end
+    local currentDateTime = os.date("%m-%d-%Y %H:%M:%S")
     local connect = {
         {
             ["color"] = 255,
@@ -73,7 +66,7 @@ function sendToDiscord(message)
             ["description"] = message,
             ["footer"] = {
                 ["icon_url"] = "https://media.discordapp.net/attachments/1077462714902917171/1077462755625418862/96Logo.png",
-                ["text"] = "www.nemesisGD.com",
+                ["text"] = "www.nemesisGD.com | " .. currentDateTime,
             },
         }
     }
