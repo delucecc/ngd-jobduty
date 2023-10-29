@@ -7,5 +7,6 @@ https://discord.gg/AnXx2GVGcM
 
 ![image](https://github.com/delucecc/ngd-pdduty/assets/31872986/2ed56920-75c0-4e08-9bb6-2c23c8296c34)
 
-![image](https://github.com/delucecc/ngd-pdduty/assets/31872986/738457ce-9d18-4cb5-b30a-6160d9ca4148)
+![image](https://github.com/delucecc/ngd-pdduty/assets/31872986/4d60bc93-1b55-4b4d-91ce-12b32fd437e8)
+
 
