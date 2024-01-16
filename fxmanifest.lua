@@ -1,4 +1,4 @@
-Description 'ngd-pdduty | Nemesis Gaming Development'
+Description 'ngd-jobduty | Nemesis Gaming Development'
 author 'deluce#0'
 fx_version 'cerulean'
 game 'gta5'

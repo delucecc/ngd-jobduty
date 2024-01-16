@@ -126,7 +126,7 @@ function sendToDiscord(jobName, playerName, callsign, timeOnDuty, customMessage,
     local currentDateTime = os.date("%m-%d-%Y %H:%M:%S")
     local connect = {
         {
-            ["color"] = color or 255, -- Default color if none is provided
+            ["color"] = color or 255,
             ["title"] = title,
             ["description"] = message,
             ["footer"] = {
